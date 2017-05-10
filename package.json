@@ -1,0 +1,23 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "todo",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  },
+  "repository": "https://github.com/jgluhov/todo-app.git",
+  "author": "Evgeniy Gluhov <evgeniy.gluhov@noveogroup.com>",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.6.4",
+    "angular-mocks": "^1.6.4",
+    "chai": "^3.5.0",
+    "jquery": "^3.2.1",
+    "karma": "^1.7.0",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "mocha": "^3.3.0"
+  }
+}
