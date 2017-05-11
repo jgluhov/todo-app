@@ -3,6 +3,7 @@
 var karmaWebpack = require('karma-webpack'),
   karmaMocha = require('karma-mocha'),
   karmaChai = require('karma-chai'),
+  karmaChromeLauncher = require('karma-chrome-launcher'),
   karmaPhantomJSLauncher = require('karma-phantomjs-launcher'),
   karmaSpecReporter = require('karma-spec-reporter'),
   webpackConfig = require('./config/webpack.test');
@@ -47,7 +48,7 @@ module.exports = function(config) {
         suppressPassed: false,      // do not print information about passed tests
         suppressSkipped: true,      // do not print information about skipped tests
         showSpecTiming: false,      // print the time elapsed for each spec
-        failFast: true              // test would finish with error when a first fail occurs.
+        failFast: false              // test would finish with error when a first fail occurs.
       },
 
     // web server port
@@ -81,6 +82,7 @@ module.exports = function(config) {
       karmaWebpack,
       karmaMocha,
       karmaChai,
+      karmaChromeLauncher,
       karmaPhantomJSLauncher,
       karmaSpecReporter
     ],
