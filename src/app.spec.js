@@ -16,15 +16,17 @@ describe("TodoApp", () => {
     $todoComponentElement = $compile('<todo-component></todo-component>')($scope);
   }));
 
-  it('title property should be initialized', () => {
-    expect(todoComponentController.title).to.be.a('string');
-    expect(todoComponentController.title).to.not.be.empty;
-  });
+  describe("Title property", () => {
+    it('title property should be initialized', () => {
+      expect(todoComponentController.title).to.be.a('string');
+      expect(todoComponentController.title).to.not.be.empty;
+    });
 
-  it('title property should be rendered', () => {
-    $scope.$digest();
+    it('title property should be rendered', () => {
+      $scope.$digest();
 
-    expect($todoComponentElement.find('span[ng-bind="vm.title"]').text())
-      .to.be.equal(todoComponentController.title);
+      expect($todoComponentElement.find('span[ng-bind="vm.title"]').text())
+        .to.be.equal(todoComponentController.title);
+    });
   });
 })

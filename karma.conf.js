@@ -4,6 +4,7 @@ var karmaWebpack = require('karma-webpack'),
   karmaMocha = require('karma-mocha'),
   karmaChai = require('karma-chai'),
   karmaPhantomJSLauncher = require('karma-phantomjs-launcher'),
+  karmaSpecReporter = require('karma-spec-reporter'),
   webpackConfig = require('./config/webpack.test');
 
 module.exports = function(config) {
@@ -18,7 +19,7 @@ module.exports = function(config) {
     frameworks: ['mocha', 'chai'],
 
     // list of files / patterns to load in the browser
-    files: [      
+    files: [
       'karma-tests.js'
     ],
 
@@ -37,7 +38,17 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['dots'],
+    reporters: ['spec'],
+
+    specReporter: {
+        maxLogLines: 5,             // limit number of lines logged per test
+        suppressErrorSummary: true, // do not print error summary
+        suppressFailed: false,      // do not print information about failed tests
+        suppressPassed: false,      // do not print information about passed tests
+        suppressSkipped: true,      // do not print information about skipped tests
+        showSpecTiming: false,      // print the time elapsed for each spec
+        failFast: true              // test would finish with error when a first fail occurs.  
+      },
 
     // web server port
     port: 9876,
@@ -70,7 +81,8 @@ module.exports = function(config) {
       karmaWebpack,
       karmaMocha,
       karmaChai,
-      karmaPhantomJSLauncher
+      karmaPhantomJSLauncher,
+      karmaSpecReporter
     ],
 
     // Continuous Integration mode
