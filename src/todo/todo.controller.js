@@ -1,8 +1,6 @@
-// import angular from 'angular';
-
 class TodoContoller {
-  constructor() {
-    this.title = 'todos';
+  $onInit() {    
+    this.title = 'todoss';
   }
 }
 

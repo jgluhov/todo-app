@@ -7,7 +7,7 @@ module.exports = webpackMerge(webpackCommon, {
   devtool: "inline-source-map",
 
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, '..', "dist"),
   },
 
   plugins: [

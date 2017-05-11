@@ -6,6 +6,6 @@ export default angular
   .component('todoComponent', {
     template: require('./todo.template.html'),
     controllerAs: 'vm',
-    controller: TodoContoller    
+    controller: TodoContoller     
   })
   .name;
