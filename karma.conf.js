@@ -1,5 +1,10 @@
 // Karma configuration
 // Generated on Wed May 10 2017 16:13:58 GMT+0300 (Russia TZ 2 Standard Time)
+var karmaWebpack = require('karma-webpack'),
+  karmaMocha = require('karma-mocha'),
+  karmaChai = require('karma-chai'),
+  karmaPhantomJSLauncher = require('karma-phantomjs-launcher'),
+  webpackConfig = require('./webpack.config');
 
 module.exports = function(config) {
   config.set({
@@ -18,7 +23,7 @@ module.exports = function(config) {
       { pattern: 'node_modules/angular/angular.min.js', watched: false },
       { pattern: 'node_modules/angular-mocks/angular-mocks.js', watched: false },
       'src/*.js',
-      'test/*.spec.js'
+      'karma-tests.js'
     ],
 
 
@@ -30,14 +35,13 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'karma-tests.js': ['webpack']
     },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['dots'],
-
 
     // web server port
     port: 9876,
@@ -60,6 +64,14 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['PhantomJS'],
 
+    webpack: webpackConfig,
+
+    plugins: [
+      karmaWebpack,
+      karmaMocha,
+      karmaChai,
+      karmaPhantomJSLauncher
+    ],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
