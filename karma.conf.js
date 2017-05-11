@@ -4,7 +4,7 @@ var karmaWebpack = require('karma-webpack'),
   karmaMocha = require('karma-mocha'),
   karmaChai = require('karma-chai'),
   karmaPhantomJSLauncher = require('karma-phantomjs-launcher'),
-  webpackConfig = require('./webpack.config');
+  webpackConfig = require('./config/webpack.test');
 
 module.exports = function(config) {
   config.set({
@@ -19,10 +19,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'node_modules/jquery/dist/jquery.min.js', watched: false },
-      { pattern: 'node_modules/angular/angular.min.js', watched: false },
-      { pattern: 'node_modules/angular-mocks/angular-mocks.js', watched: false },
-      'src/*.js',
       'karma-tests.js'
     ],
 
@@ -65,6 +61,10 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
 
     webpack: webpackConfig,
+
+    webpackMiddleware: {
+      noInfo: true
+    },
 
     plugins: [
       karmaWebpack,
