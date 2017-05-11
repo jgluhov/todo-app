@@ -1,6 +1,10 @@
+import Todo from './Todo';
+
 class TodoContoller {
-  $onInit() {    
-    this.title = 'todoss';
+  $onInit() {
+    this.title = 'todos';
+    this.placeholder = 'What needs to be done?';
+    this.currentTodo = new Todo();
   }
 }
 

@@ -1,6 +1,7 @@
 import './app';
 import 'jquery';
 import 'angular-mocks';
+import Todo from './todo/Todo';
 import { expect } from 'chai';
 
 describe("TodoApp", () => {
@@ -20,15 +21,20 @@ describe("TodoApp", () => {
   }));
 
   describe("Todo title", () => {
+    let todoTitleElement;
+
+    beforeEach(() =>
+      todoTitleElement = todoComponentElement.querySelector('span[ng-bind="vm.title"]')
+    );
+
     it('title property should be initialized', () => {
       expect(todoComponentController.title).to.be.a('string');
       expect(todoComponentController.title).to.not.be.empty;
     });
 
-    it('title property should be rendered', () => {
-      expect(todoComponentElement.querySelector('span[ng-bind="vm.title"]').textContent)
-        .to.be.equal(todoComponentController.title);
-    });
+    it('title property should be rendered', () =>
+      expect(todoTitleElement.textContent).to.be.equal(todoComponentController.title)
+    );
   });
 
   describe("Todo form", () => {
@@ -36,13 +42,9 @@ describe("TodoApp", () => {
       todoInputElement;
 
     describe("Todo form element", () => {
-      beforeEach(() => {
-        todoFormElement = todoComponentElement.querySelector('form');
-      })
+      beforeEach(() => todoFormElement = todoComponentElement.querySelector('form'));
 
-      it('should contain form', () => {
-        expect(todoFormElement).to.exist;
-      });
+      it('should contain form', () => expect(todoFormElement).to.exist);
 
       it('shoud have necessary attributes', () => {
         expect(todoFormElement.hasAttribute('novalidate')).to.be.true;
@@ -50,14 +52,26 @@ describe("TodoApp", () => {
       });
     });
 
-    describe("Todo form input element", () => {      
-      beforeEach(() => {
-        todoInputElement = todoFormElement.querySelector('input');
+    describe("Todo form input element", () => {
+      beforeEach(() => todoInputElement = todoFormElement.querySelector('input'));
+
+      it('shoud have placeholder property', () => {
+        expect(todoComponentController.placeholder).to.be.a('string');
+        expect(todoComponentController.placeholder).to.not.be.empty;
       });
 
-      it('shoud contain input', () => {
-        expect(todoInputElement).to.exist;
-      })
-    })
-  })
+      it('should be currentTodo be initialized', () => {
+        expect(todoComponentController.currentTodo).to.be.exist;
+        expect(todoComponentController.currentTodo instanceof Todo).to.be.true;
+      });
+
+      it('should contain input', () => expect(todoInputElement).to.exist);
+
+      it('should be set placeholder for input', () =>
+        expect(todoInputElement.placeholder).to.not.be.empty
+      );
+    });
+
+  });
+
 })
