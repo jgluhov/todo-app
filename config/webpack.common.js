@@ -28,5 +28,11 @@ module.exports = {
         loader: 'html-loader'
       },
     ]
-  }  
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      'window.jQuery': 'jquery',
+      'window.$': 'jquery',
+    })
+  ]
 }
