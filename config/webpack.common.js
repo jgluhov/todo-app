@@ -1,5 +1,6 @@
 var path = require('path'),
-  webpack = require('webpack');
+  webpack = require('webpack'),
+  HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -33,6 +34,10 @@ module.exports = {
     new webpack.ProvidePlugin({
       'window.jQuery': 'jquery',
       'window.$': 'jquery',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/index.html'
     })
   ]
 }
