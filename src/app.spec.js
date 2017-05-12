@@ -14,7 +14,7 @@ describe("TodoApp", () => {
       TodoFactory: TodoFactory
     });
 
-    todoComponentElement = $compile('<todo-component></todo-component>')($scope)[0];    
+    todoComponentElement = $compile('<todo-component></todo-component>')($scope)[0];
     $scope.$digest();
   }));
 
@@ -64,8 +64,13 @@ describe("TodoApp", () => {
       );
 
       it('should be initialized currentTodo property', () => {
-
         expect(todoComponentController.currentTodo).to.be.exist;
+      });
+
+      it('should contain empty todos array after initialization', () => {
+        expect(todoComponentController.todos).to.be.exist;
+        expect(Array.isArray(todoComponentController.todos)).to.be.true;
+        expect(todoComponentController.todos).to.be.empty;
       })
     });
 

@@ -1,8 +1,6 @@
 import '../src/app';
-import 'jquery';
 import 'angular-mocks';
-
-import { expect } from 'chai';
+import 'chai';
 
 var testsContext = require.context("../src", true, /.spec$/);
 
