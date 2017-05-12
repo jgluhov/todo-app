@@ -5,6 +5,10 @@ class TodoContoller {
     this.currentTodo = new TodoFactory();
     this.todos = [];
   }
+
+  handleCreateTodo() {
+    
+  }
 }
 
 TodoContoller.$inject = ['TodoFactory'];

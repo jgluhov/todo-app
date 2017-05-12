@@ -71,7 +71,13 @@ describe("TodoApp", () => {
         expect(todoComponentController.todos).to.be.exist;
         expect(Array.isArray(todoComponentController.todos)).to.be.true;
         expect(todoComponentController.todos).to.be.empty;
+      });
+
+      it('shoud apply handler if ENTER button was pressed', () => {
+        
+
       })
+
     });
 
   });
