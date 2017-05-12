@@ -1,8 +1,4 @@
-import './app';
-import 'jquery';
-import 'angular-mocks';
-import Todo from './todo/Todo';
-import { expect } from 'chai';
+import TodoFactory from './todo/todo.factory';
 
 describe("TodoApp", () => {
   let $scope,
@@ -12,11 +8,13 @@ describe("TodoApp", () => {
   beforeEach(angular.mock.module('todoApp'));
 
   beforeEach(angular.mock.inject(($compile, $rootScope, $componentController) => {
-    todoComponentController = $componentController('todoComponent', null);
     $scope = $rootScope.$new();
-    todoComponentElement = $compile('<todo-component></todo-component>')($scope)[0];
 
-    todoComponentController.$onInit();
+    todoComponentController = $componentController('todoComponent', {
+      TodoFactory: TodoFactory
+    });
+
+    todoComponentElement = $compile('<todo-component></todo-component>')($scope)[0];    
     $scope.$digest();
   }));
 
@@ -46,30 +44,29 @@ describe("TodoApp", () => {
 
       it('should contain form', () => expect(todoFormElement).to.exist);
 
-      it('shoud have necessary attributes', () => {
-        expect(todoFormElement.hasAttribute('novalidate')).to.be.true;
+      it('shoud have correct name', () => {
         expect(todoFormElement.name).to.be.equal('todoForm');
       });
     });
 
-    describe("Todo form input element", () => {
+    describe("Todo todo input element", () => {
       beforeEach(() => todoInputElement = todoFormElement.querySelector('input'));
 
-      it('shoud have placeholder property', () => {
+      it('should contain input element', () => expect(todoInputElement).to.exist);
+
+      it('shoud be set the placeholder property', () => {
         expect(todoComponentController.placeholder).to.be.a('string');
         expect(todoComponentController.placeholder).to.not.be.empty;
       });
 
-      it('should be currentTodo be initialized', () => {
-        expect(todoComponentController.currentTodo).to.be.exist;
-        expect(todoComponentController.currentTodo instanceof Todo).to.be.true;
-      });
-
-      it('should contain input', () => expect(todoInputElement).to.exist);
-
-      it('should be set placeholder for input', () =>
+      it('should be set placeholder to input element', () =>
         expect(todoInputElement.placeholder).to.not.be.empty
       );
+
+      it('should be initialized currentTodo property', () => {
+
+        expect(todoComponentController.currentTodo).to.be.exist;
+      })
     });
 
   });

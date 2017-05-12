@@ -1,4 +1,4 @@
 import angular from 'angular';
-import todo from './todo';
+import TodoModule from './todo';
 
-export default angular.module('todoApp', [todo]);
+export default angular.module('todoApp', [TodoModule]);
