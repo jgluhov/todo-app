@@ -111,7 +111,7 @@ describe("TodoApp", () => {
     });
 
     it('should trigger an event and call handler once', () => {
-      const handleKeyDownSpy = sandbox.stub(componentController, 'handleKeyDown');
+      const handleKeyDownStub = sandbox.stub(componentController, 'handleKeyDown');
 
       parentScope.$digest();
 
@@ -120,8 +120,84 @@ describe("TodoApp", () => {
         which: 13
       });
 
-      expect(handleKeyDownSpy).to.have.been.calledOnce;
+      expect(handleKeyDownStub).to.have.been.calledOnce;
     });
 
+    it('should call addTodo fn if ENTER key was pressed', () => {
+      const addTodoStub = sandbox.stub(componentController, 'addTodo');
+      componentController.currentTodo.text = 'some text';
+
+      parentScope.$digest();
+
+      $inputElement.triggerHandler({
+        type: 'keydown',
+        which: 13
+      });
+
+      expect(addTodoStub).to.have.been.calledOnce;
+    })
+
+    it('should not add new todo to the list if not the ENTER key was pressed', () => {
+      const addTodoStub = sandbox.stub(componentController, 'addTodo');
+
+      parentScope.$digest();
+
+      $inputElement.triggerHandler({
+        type: 'keydown',
+        which: 14
+      });
+
+      expect(addTodoStub).to.not.have.been.called;
+    });
+
+    it('should not add new todo if it`s not correct', () => {
+      const addTodoStub = sandbox.stub(componentController, 'addTodo');
+      componentController.currentTodo.text = '';
+
+      parentScope.$digest();
+
+      $inputElement.triggerHandler({
+        type: 'keydown',
+        which: 13
+      });
+
+      expect(addTodoStub).to.not.have.been.called;
+    });
+
+    it('should add new todo if it`s correct', () => {
+      const previousTodo = componentController.currentTodo;
+
+      previousTodo.text = 'some todo';
+      const addTodoSpy = sandbox.spy(componentController, 'addTodo');
+
+      parentScope.$digest();
+
+      $inputElement.triggerHandler({
+        type: 'keydown',
+        which: 13
+      });
+
+      expect(addTodoSpy).to.have.been.calledWith(previousTodo);
+      expect(componentController.todos).to.include(previousTodo);
+    })
+
+    it('should clear input field and create new todo after adding', () => {
+      const previousTodo = componentController.currentTodo;
+
+      previousTodo.text = 'some todo';
+
+      parentScope.$digest();
+
+      $inputElement.triggerHandler({
+        type: 'keydown',
+        which: 13
+      });
+
+      expect(previousTodo).to.not.equal(componentController.currentTodo);
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    })
   });
 })

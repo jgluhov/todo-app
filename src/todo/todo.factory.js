@@ -3,6 +3,10 @@ function TodoFactory(text = '') {
     constructor(text = '') {
       this.text = text;
     }
+
+    isCorrect() {
+      return this.text !== '';
+    }
   }
 }
 

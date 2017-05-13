@@ -3,7 +3,7 @@
   <form class="todo-form" name="todoForm" novalidate>
     <input type="text"
       ng-model="vm.currentTodo.text"
-      ng-keydown="vm.handleKeyDown()"
+      ng-keydown="vm.handleKeyDown($event)"
       placeholder="{{vm.placeholder}}">
   </form>
 </div>
