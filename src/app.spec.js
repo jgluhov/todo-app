@@ -52,7 +52,7 @@ describe("TodoApp", () => {
 
       it('should contain form', () => expect($formElement).to.exist);
 
-      it('shoud have correct name', () => {
+      it('should have correct name', () => {
         expect($formElement.attr('name')).to.be.equal('todoForm');
       });
     });
@@ -80,7 +80,7 @@ describe("TodoApp", () => {
 
     it('should contain input element', () => expect($inputElement).to.exist);
 
-    it('shoud be set the placeholder property', () => {
+    it('should be set the placeholder property', () => {
       expect(componentController.placeholder).to.be.a('string');
       expect(componentController.placeholder).to.not.be.empty;
     });
@@ -115,10 +115,7 @@ describe("TodoApp", () => {
 
       parentScope.$digest();
 
-      $inputElement.triggerHandler({
-        type: 'keydown',
-        which: 13
-      });
+      $inputElement.triggerHandler({ type: 'keydown', which: 13 });
 
       expect(handleKeyDownStub).to.have.been.calledOnce;
     });
@@ -129,9 +126,7 @@ describe("TodoApp", () => {
 
       parentScope.$digest();
 
-      $inputElement.triggerHandler({
-        type: 'keydown',
-        which: 13
+      $inputElement.triggerHandler({ type: 'keydown', which: 13
       });
 
       expect(addTodoStub).to.have.been.calledOnce;
@@ -142,10 +137,7 @@ describe("TodoApp", () => {
 
       parentScope.$digest();
 
-      $inputElement.triggerHandler({
-        type: 'keydown',
-        which: 14
-      });
+      $inputElement.triggerHandler({ type: 'keydown', which: 14 });
 
       expect(addTodoStub).to.not.have.been.called;
     });
@@ -156,10 +148,7 @@ describe("TodoApp", () => {
 
       parentScope.$digest();
 
-      $inputElement.triggerHandler({
-        type: 'keydown',
-        which: 13
-      });
+      $inputElement.triggerHandler({ type: 'keydown', which: 13 });
 
       expect(addTodoStub).to.not.have.been.called;
     });
@@ -172,10 +161,7 @@ describe("TodoApp", () => {
 
       parentScope.$digest();
 
-      $inputElement.triggerHandler({
-        type: 'keydown',
-        which: 13
-      });
+      $inputElement.triggerHandler({ type: 'keydown', which: 13 });
 
       expect(addTodoSpy).to.have.been.calledWith(previousTodo);
       expect(componentController.todos).to.include(previousTodo);
@@ -183,15 +169,11 @@ describe("TodoApp", () => {
 
     it('should clear input field and create new todo after adding', () => {
       const previousTodo = componentController.currentTodo;
-
       previousTodo.text = 'some todo';
 
       parentScope.$digest();
 
-      $inputElement.triggerHandler({
-        type: 'keydown',
-        which: 13
-      });
+      $inputElement.triggerHandler({ type: 'keydown', which: 13 });
 
       expect(previousTodo).to.not.equal(componentController.currentTodo);
     });
