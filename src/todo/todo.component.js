@@ -15,8 +15,6 @@ export class TodoContoller {
 
   }
 
-
-
   addTodo(todo) {
     this.todos.push(todo);
   }
