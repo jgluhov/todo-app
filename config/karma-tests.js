@@ -1,6 +1,7 @@
 import '../src/app';
+import 'jquery';
 import 'angular-mocks';
-import chai, { expect } from 'chai';
+import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 

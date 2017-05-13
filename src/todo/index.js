@@ -1,13 +1,9 @@
 import angular from 'angular';
-import TodoContoller from './todo.controller';
+import TodoComponent from './todo.component';
 import TodoFactory from './todo.factory';
 
 export default angular
   .module('TodoModule', [])
-  .component('todoComponent', {
-    template: require('./todo.template.html'),
-    controllerAs: 'vm',
-    controller: TodoContoller
-  })
+  .component('todoComponent', TodoComponent)
   .factory('TodoFactory', TodoFactory)
   .name;

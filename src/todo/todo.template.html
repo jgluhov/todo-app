@@ -2,7 +2,8 @@
   <span class="todo-title" ng-bind="vm.title"></span>
   <form class="todo-form" name="todoForm" novalidate>
     <input type="text"
-      placeholder="{{vm.placeholder}}"
-      ng-model="vm.currentTodo.text">
+      ng-model="vm.currentTodo.text"
+      ng-keydown="vm.handleKeyDown()"
+      placeholder="{{vm.placeholder}}">
   </form>
 </div>

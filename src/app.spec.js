@@ -1,85 +1,101 @@
 import TodoFactory from './todo/todo.factory';
 
+import { spy, stub } from 'sinon';
+import { expect } from 'chai';
+
 describe("TodoApp", () => {
-  let $scope,
-    todoComponentController,
-    todoComponentElement;
+  let componentController,
+    $componentScope,
+    $componentElement;
 
   beforeEach(angular.mock.module('todoApp'));
 
-  beforeEach(angular.mock.inject(($compile, $rootScope, $componentController) => {
-    $scope = $rootScope.$new();
+  beforeEach(angular.mock.inject(($compile, $rootScope) => {
+    const $scope = $rootScope.$new();
 
-    todoComponentController = $componentController('todoComponent', {
-      TodoFactory: TodoFactory
-    });
+    $componentElement = $compile('<todo-component></todo-component>')($scope);
+    $componentScope = $componentElement.isolateScope();
+    componentController = $componentScope.vm;
 
-    todoComponentElement = $compile('<todo-component></todo-component>')($scope)[0];
-    $scope.$digest();
+    $componentScope.$digest();
   }));
 
-  describe("Todo title", () => {
-    let todoTitleElement;
+  describe("Component title", () => {
+    let $titleElement;
 
     beforeEach(() =>
-      todoTitleElement = todoComponentElement.querySelector('span[ng-bind="vm.title"]')
+      $titleElement = $componentElement.find('span[ng-bind="vm.title"]')
     );
+
+    it('should contain title element', () => expect($titleElement).to.exist);
 
     it('title property should be initialized', () => {
-      expect(todoComponentController.title).to.be.a('string');
-      expect(todoComponentController.title).to.not.be.empty;
+      expect(componentController.title).to.be.a('string');
+      expect(componentController.title).to.not.be.empty;
     });
 
-    it('title property should be rendered', () =>
-      expect(todoTitleElement.textContent).to.be.equal(todoComponentController.title)
-    );
+    it('title property should be rendered', () => {
+      expect($titleElement.text()).to.be.equal(componentController.title)
+    });
+
+    it('should change title if property changed', () => {
+      componentController.title = 'new title';
+      $componentScope.$digest();
+      expect($titleElement.text()).to.be.equal(componentController.title);
+    })
   });
 
-  describe("Todo form", () => {
-    let todoFormElement,
-      todoInputElement;
+  describe("Component form", () => {
+    let $formElement,
+      $inputElement,
+      keyboardEvent;
 
     describe("Todo form element", () => {
-      beforeEach(() => todoFormElement = todoComponentElement.querySelector('form'));
+      beforeEach(() => $formElement = $componentElement.find('form'));
 
-      it('should contain form', () => expect(todoFormElement).to.exist);
+      it('should contain form', () => expect($formElement).to.exist);
 
       it('shoud have correct name', () => {
-        expect(todoFormElement.name).to.be.equal('todoForm');
+        expect($formElement.attr('name')).to.be.equal('todoForm');
       });
     });
 
-    describe("Todo todo input element", () => {
-      beforeEach(() => todoInputElement = todoFormElement.querySelector('input'));
-
-      it('should contain input element', () => expect(todoInputElement).to.exist);
-
-      it('shoud be set the placeholder property', () => {
-        expect(todoComponentController.placeholder).to.be.a('string');
-        expect(todoComponentController.placeholder).to.not.be.empty;
+    describe("Todo input element", () => {
+      beforeEach(() => {
+        $inputElement =  $componentElement.find('input');
       });
 
-      it('should be set placeholder to input element', () =>
-        expect(todoInputElement.placeholder).to.not.be.empty
-      );
+      it('should contain input element', () => expect($inputElement).to.exist);
+
+      it('shoud be set the placeholder property', () => {
+        expect(componentController.placeholder).to.be.a('string');
+        expect(componentController.placeholder).to.not.be.empty;
+      });
+
+      it('should be set placeholder to input element', () => {
+        expect($inputElement.attr('placeholder')).to.not.be.empty;
+        expect($inputElement.attr('placeholder'))
+          .to.be.equal(componentController.placeholder);
+      });
+
+      it('should change placeholder text if property was changed', () => {
+        componentController.placeholder = 'some placeholder';
+
+        $componentScope.$digest();
+
+        expect($inputElement.attr('placeholder'))
+          .to.be.equal(componentController.placeholder);
+      })
 
       it('should be initialized currentTodo property', () => {
-        expect(todoComponentController.currentTodo).to.be.exist;
+        expect(componentController.currentTodo).to.be.exist;
       });
 
       it('should contain empty todos array after initialization', () => {
-        expect(todoComponentController.todos).to.be.exist;
-        expect(Array.isArray(todoComponentController.todos)).to.be.true;
-        expect(todoComponentController.todos).to.be.empty;
+        expect(componentController.todos).to.be.exist;
+        expect(Array.isArray(componentController.todos)).to.be.true;
+        expect(componentController.todos).to.be.empty;
       });
-
-      it('shoud apply handler if ENTER button was pressed', () => {
-        
-
-      })
-
     });
-
   });
-
 })

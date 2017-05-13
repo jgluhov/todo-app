@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/karma start karma.conf.js",
-    "dev": "./node_modules/.bin/webpack-dev-server --inline"
+    "dev": "./node_modules/.bin/webpack-dev-server --hot --inline"
   },
   "repository": "https://github.com/jgluhov/todo-app.git",
   "author": "Evgeniy Gluhov <evgeniy.gluhov@noveogroup.com>",
