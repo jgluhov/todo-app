@@ -37,7 +37,7 @@ describe("TodoApp", () => {
       });
 
       it('title property should be rendered', () => {
-        expect($titleElement.text()).to.be.equal(componentController.title)
+        expect($titleElement.text()).to.be.equal(componentController.title);
       });
 
       it('should change title if property changed', () => {
