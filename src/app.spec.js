@@ -1,6 +1,6 @@
 import TodoFactory from './todo/todo.factory';
 
-import { spy, stub } from 'sinon';
+import { spy } from 'sinon';
 import { expect } from 'chai';
 
 describe("TodoApp", () => {
@@ -60,14 +60,16 @@ describe("TodoApp", () => {
 
   describe("Component form", () => {
     let $inputElement,
-      parentScope;
+      parentScope,
+      sandbox;
 
     beforeEach(angular.mock.inject(($compile, $rootScope) => {
+      sandbox = sinon.sandbox.create();
+
       parentScope = $rootScope.$new();
 
       $componentElement = $compile('<todo-component></todo-component>')(parentScope);
       componentController = $componentElement.controller('todoComponent');
-      componentController.handleKeyDown = sinon.spy();
 
       parentScope.$digest();
     }));
@@ -108,12 +110,18 @@ describe("TodoApp", () => {
       expect(componentController.todos).to.be.empty;
     });
 
-    it('should trigger an event', () => {
+    it('should trigger an event and call handler once', () => {
+      const handleKeyDownSpy = sandbox.stub(componentController, 'handleKeyDown');
+
+      parentScope.$digest();
+
       $inputElement.triggerHandler({
         type: 'keydown',
         which: 13
       });
-      expect(componentController.handleKeyDown).to.have.been.called;
-    })
+
+      expect(handleKeyDownSpy).to.have.been.calledOnce;
+    });
+
   });
 })
