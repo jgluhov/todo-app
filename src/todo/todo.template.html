@@ -1,9 +1,4 @@
 <div class="todo">
   <span class="todo-title" ng-bind="vm.title"></span>
-  <form class="todo-form" name="todoForm" novalidate>
-    <input type="text"
-      ng-model="vm.currentTodo.text"
-      ng-keydown="vm.handleKeyDown($event)"
-      placeholder="{{vm.placeholder}}">
-  </form>
+  <todo-form on-create-todo="vm.handleCreateTodo(todo)"></todo-form>
 </div>

@@ -20,7 +20,8 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         options: {
           presets: [
-            'es2015'
+            'es2015',
+            'stage-0'
           ]
         }
       },
