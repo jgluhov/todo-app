@@ -2,7 +2,7 @@ function TodoFormDirective(TodoFactory) {
 
   const controller = ($scope) => {
     $scope.todoFactory = TodoFactory;
-    
+
     $scope.currentTodo = $scope.todoFactory.createTodo();
   }
 
@@ -11,7 +11,7 @@ function TodoFormDirective(TodoFactory) {
       if(e.which !== 13 || !scope.currentTodo.isCorrect()) {
         return;
       }
-
+      
       scope.onCreateTodo({ todo: scope.currentTodo });
 
       scope.currentTodo = scope.todoFactory.createTodo();

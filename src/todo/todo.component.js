@@ -2,10 +2,12 @@ class TodoContoller {
   $onInit() {
     this.title = 'todos';
     this.todos = [];
-  }  
-}
+  }
 
-TodoContoller.$inject = [];
+  handleCreateTodo(todo) {
+    
+  }
+}
 
 const TodoComponent = {
    template: require('./todo.template.html'),

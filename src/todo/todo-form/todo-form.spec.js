@@ -69,7 +69,7 @@ describe('todoFormDirective', () => {
     expect(handleKeyDownStub).to.have.been.called;
   })
 
-  it("should'n create new todo if not an ENTER key was pressed", () => {
+  it("should not create new todo if not an ENTER key was pressed", () => {
     todoFormScope.currentTodo.text = 'some todo';
     const previousTodo = todoFormScope.currentTodo;
     const onCreateTodoSpy = sandbox.spy(todoFormScope, 'onCreateTodo');
@@ -82,7 +82,7 @@ describe('todoFormDirective', () => {
     expect(todoFormScope.currentTodo).to.be.equal(previousTodo);
   });
 
-  it("should't create todo if it's not correct todo", () => {
+  it("should not create todo if it's not correct todo", () => {
     todoFormScope.currentTodo.text = '';
 
     const previousTodo = todoFormScope.currentTodo;

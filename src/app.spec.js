@@ -1,6 +1,7 @@
 import TodoFactory from './todo/todo.factory';
 
 import { expect } from 'chai';
+import { spy } from 'sinon';
 
 describe("TodoApp", () => {
   let sandbox,
@@ -9,7 +10,9 @@ describe("TodoApp", () => {
     $compile,
     $rootScope,
     parentScope,
+    todoFormScope,
     $componentElement,
+    $todoFormElement,
     $titleElement;
 
   beforeEach(angular.mock.module('todoApp'));
@@ -23,10 +26,14 @@ describe("TodoApp", () => {
       parentScope = $rootScope.$new();
 
       $componentElement = $compile('<todo-component></todo-component>')(parentScope);
+
       componentScope = $componentElement.isolateScope();
       componentController = componentScope.vm;
 
       componentScope.$digest();
+
+      $todoFormElement = $componentElement.find('todo-form');
+      todoFormScope = $todoFormElement.isolateScope();
     }));
 
     describe("Component title", () => {
@@ -52,7 +59,23 @@ describe("TodoApp", () => {
         expect(Array.isArray(componentController.todos)).to.be.true;
         expect(componentController.todos).to.be.empty;
       });
+
+      it('should appear new todo if user pressed  ENTER key and todo is correct', () => {
+        const handleCreateTodoSpy = sinon.spy(componentController, 'handleCreateTodo');
+        const onCreateTodoSpy = sinon.spy(todoFormScope, 'onCreateTodo');
+        const previousTodo = todoFormScope.currentTodo;
+        previousTodo.text = 'some todo';
+
+        componentScope.$digest();
+
+        $todoFormElement.find('input').triggerHandler({ type: 'keydown', which: 13 });
+
+        expect(handleCreateTodoSpy).to.have.been.called;
+        expect(onCreateTodoSpy).to.have.been.calledWith({ todo: previousTodo });
+        expect(handleCreateTodoSpy).to.have.been.calledWith(previousTodo);
+      })
     })
+
 
 
     afterEach(() => {
