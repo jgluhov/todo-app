@@ -1,10 +1,13 @@
 class TodoContoller {
   constructor(TodoFactory) {
-    this.TodoFactory = TodoFactory;
+    this.todoFactory = TodoFactory;
+  }
+
+  $onInit() {
     this.title = 'todos';
     this.placeholder = 'What needs to be done?';
     this.todos = [];
-    this.createTodo();
+    this.currentTodo = this.todoFactory.createTodo();
   }
 
   handleKeyDown(e) {
@@ -12,16 +15,12 @@ class TodoContoller {
       return;
     }
     this.addTodo(this.currentTodo);
-    this.createTodo();
+    this.currentTodo = this.todoFactory.createTodo();
   };
 
   addTodo(todo) {
     this.todos.push(todo);
   };
-
-  createTodo() {
-    this.currentTodo = new this.TodoFactory();
-  }
 }
 
 TodoContoller.$inject = ['TodoFactory'];

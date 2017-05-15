@@ -1,12 +1,21 @@
-function TodoFactory(text = '') {
-  return class Todo {
-    constructor(text = '') {
+function TodoFactory() {
+
+  class Todo {
+    constructor(text) {
       this.text = text;
     }
 
     isCorrect() {
       return this.text !== '';
     }
+  }
+
+  const createTodo = (text = '') => {
+    return new Todo(text);
+  }
+
+  return {
+    createTodo
   }
 }
 

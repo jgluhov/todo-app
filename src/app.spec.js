@@ -71,6 +71,7 @@ describe("TodoApp", () => {
       $componentElement = $compile('<todo-component></todo-component>')(parentScope);
       componentController = $componentElement.controller('todoComponent');
 
+      componentController.$onInit();
       parentScope.$digest();
     }));
 
@@ -122,14 +123,17 @@ describe("TodoApp", () => {
 
     it('should call addTodo fn if ENTER key was pressed', () => {
       const addTodoStub = sandbox.stub(componentController, 'addTodo');
+      const createTodoStub = sandbox.stub(
+        componentController.todoFactory, 'createTodo'
+      ).callsFake(f => f);
+
       componentController.currentTodo.text = 'some text';
 
       parentScope.$digest();
-
-      $inputElement.triggerHandler({ type: 'keydown', which: 13
-      });
+      $inputElement.triggerHandler({ type: 'keydown', which: 13 });
 
       expect(addTodoStub).to.have.been.calledOnce;
+      expect(createTodoStub).to.have.been.calledOnce;
     })
 
     it('should not add new todo to the list if not the ENTER key was pressed', () => {
