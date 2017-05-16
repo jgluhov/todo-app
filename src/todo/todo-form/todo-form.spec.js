@@ -44,7 +44,7 @@ describe('todoFormDirective', () => {
   })
 
   it('should contain form tag', () => {
-    expect($todoFormElement[0].querySelector('form')).to.exist
+    expect($todoFormElement.find('form')).to.exist
   });
 
   it('should have correct name', () => {

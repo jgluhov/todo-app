@@ -1,7 +1,7 @@
 function todoListDirective() {
 
   const controller = ($scope) => {
-    console.log($scope.todos)
+    
   }
 
   return {
@@ -9,7 +9,8 @@ function todoListDirective() {
     template: require('./todo-list.template.html'),
     scope: {
       todos: '<'
-    }
+    },
+    controller
   }
 }
 

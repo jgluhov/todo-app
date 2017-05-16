@@ -6,12 +6,14 @@ describe('TODO Component', () => {
     $todoCmptElement,
     todoFormScope,
     $todoFormElement,
+    $todoListElement,
+    todoFactory,
     todoCtrl,
     parentScope;
 
   beforeEach(angular.mock.module('todoApp'));
 
-  beforeEach(angular.mock.inject((_$compile_, _$rootScope_) => {
+  beforeEach(angular.mock.inject((_$compile_, _$rootScope_, _$injector_) => {
     sandbox = sinon.sandbox.create();
     parentScope = _$rootScope_.$new();
 
@@ -21,7 +23,10 @@ describe('TODO Component', () => {
     parentScope.$digest();
 
     $todoFormElement = $todoCmptElement.find('todo-form');
+    $todoListElement = $todoCmptElement.find('todo-list');
     todoFormScope = $todoFormElement.isolateScope();
+
+    todoFactory = _$injector_.get('TodoFactory');
 
     todoCtrl.$onInit();
   }))
@@ -54,6 +59,18 @@ describe('TODO Component', () => {
     expect(todoCtrl.todos).to.include(previousTodo);
     expect(todoCtrl.todos).to.have.lengthOf(1);
   })
+
+  it('should render todo list', () => {
+    todoCtrl.todos = [
+      todoFactory.createTodo('some todo'),
+      todoFactory.createTodo('another todo'),
+      todoFactory.createTodo('next todo')
+    ];
+
+    parentScope.$digest();
+
+    expect($todoListElement.find('li').length).to.be.equal(3);
+  });
 
   afterEach(() => {
     sandbox.restore();
