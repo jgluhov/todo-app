@@ -19,7 +19,7 @@ describe('TODO Component', () => {
 
     $todoCmptElement = _$compile_('<todo-component></todo-component>')(parentScope);
     todoCtrl = $todoCmptElement.isolateScope().vm;
-
+    
     parentScope.$digest();
 
     $todoFormElement = $todoCmptElement.find('todo-form');
