@@ -23,7 +23,7 @@ describe('TODO List', () => {
     $todoListElement = $todoCmptElement.find('todo-list');
     todoListScope = $todoListElement.isolateScope();
 
-    todoFactory = $injector.get('TodoFactory');
+    todoFactory = $injector.get('todoFactory');
 
     todoCtrl.$onInit();
   }))

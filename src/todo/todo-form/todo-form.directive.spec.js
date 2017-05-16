@@ -1,4 +1,4 @@
-import TodoFactory from '../todo.factory';
+import todoFactory from '../todo.factory';
 import { expect } from 'chai';
 
 describe('todoFormDirective', () => {
@@ -14,7 +14,7 @@ describe('todoFormDirective', () => {
     todoFormController;
 
   beforeEach(angular.mock.module('todoApp', ($provide) => {
-    $provide.factory('TodoFactory', TodoFactory);
+    $provide.factory('todoFactory', todoFactory);
   }));
 
   beforeEach(angular.mock.inject((_$injector_) => {

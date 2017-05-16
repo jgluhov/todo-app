@@ -1,8 +1,9 @@
-function TodoFactory() {
+function todoFactory(todoStatusConstant) {
 
   class Todo {
-    constructor(text) {
+    constructor(text = '') {
       this.text = text;
+      this.status = todoStatusConstant.ACTIVE;
     }
 
     isCorrect() {
@@ -19,4 +20,6 @@ function TodoFactory() {
   }
 }
 
-export default TodoFactory;
+todoFactory.$inject = ['todoStatusConstant'];
+
+export default todoFactory;

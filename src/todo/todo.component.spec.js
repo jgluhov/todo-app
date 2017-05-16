@@ -7,6 +7,7 @@ describe('TODO Component', () => {
     todoFormScope,
     $todoFormElement,
     $todoListElement,
+    $todoPanelElement,
     todoFactory,
     todoCtrl,
     parentScope;
@@ -19,14 +20,15 @@ describe('TODO Component', () => {
 
     $todoCmptElement = _$compile_('<todo-component></todo-component>')(parentScope);
     todoCtrl = $todoCmptElement.isolateScope().vm;
-    
+
     parentScope.$digest();
 
     $todoFormElement = $todoCmptElement.find('todo-form');
     $todoListElement = $todoCmptElement.find('todo-list');
+    $todoPanelElement = $todoCmptElement.find('todo-panel');
     todoFormScope = $todoFormElement.isolateScope();
 
-    todoFactory = _$injector_.get('TodoFactory');
+    todoFactory = _$injector_.get('todoFactory');
 
     todoCtrl.$onInit();
   }))
@@ -71,6 +73,10 @@ describe('TODO Component', () => {
 
     expect($todoListElement.find('li').length).to.be.equal(3);
   });
+
+  it('should todo panel exist in todo component template', () => {
+    expect($todoPanelElement.length).to.be.equal(1);
+  })
 
   afterEach(() => {
     sandbox.restore();
