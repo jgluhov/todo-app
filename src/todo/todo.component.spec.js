@@ -11,7 +11,7 @@ describe('TODO Component', () => {
 
   beforeEach(angular.mock.module('todoApp'));
 
-  beforeEach(angular.mock.inject((_$compile_, _$rootScope_, _$componentController_) => {
+  beforeEach(angular.mock.inject((_$compile_, _$rootScope_) => {
     sandbox = sinon.sandbox.create();
     parentScope = _$rootScope_.$new();
 
