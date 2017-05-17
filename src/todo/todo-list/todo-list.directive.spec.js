@@ -1,37 +1,51 @@
-import { expect } from 'chai';
-
 describe('TODO List', () => {
-  let $todoCmptElement,
+  let sandbox,
+    $todoCmptElement,
     todoCtrl,
     $todoListElement,
     $injector,
     todoListScope,
     parentScope,
-    todoFactory;
+    todoFactory,
+    $compile,
+    $rootScope,
+    addTodoSpy,
+    $element;
 
   beforeEach(angular.mock.module('todoApp'))
 
-  beforeEach(angular.mock.inject((_$compile_, _$rootScope_, _$injector_) => {
-    parentScope = _$rootScope_.$new();
+  beforeEach(angular.mock.inject(_$injector_ => {
     $injector = _$injector_;
-
-    $todoCmptElement = _$compile_('<todo-component></todo-component>')(parentScope);
-    todoCtrl = $todoCmptElement.isolateScope().vm;
-
-    parentScope.$digest();
-
-    $todoListElement = $todoCmptElement.find('todo-list');
-    todoListScope = $todoListElement.isolateScope();
-
-    todoFactory = $injector.get('todoFactory');
-
-    todoCtrl.$onInit();
   }))
+
+  beforeEach(() => {
+    $compile = $injector.get('$compile');
+    $rootScope = $injector.get('$rootScope');
+    todoFactory = $injector.get('todoFactory');
+  })
+
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+    parentScope = $rootScope.$new();
+
+    todoCtrl = {
+      todos: [],
+      addTodo: function() {}
+    }
+
+    addTodoSpy = sandbox.spy(todoCtrl, 'addTodo');
+
+    $element = angular.element('<div><todo-list></todo-list><div>');
+    $element.data('$todoComponentController', todoCtrl);
+    console.log($element.data)
+    $compile($element)(parentScope);
+
+    $todoListElement = $element.find('todo-list');
+
+    // parentScope.$digest();
+  })
 
   it('should exist todoListDirective', () => {
     expect($injector.has('todoListDirective')).to.be.true;
   });
-
-
-
 });

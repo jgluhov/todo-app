@@ -6,13 +6,13 @@ function TodoFormDirective(todoFactory) {
     $scope.currentTodo = $scope.todoFactory.createTodo();
   }
 
-  const link = (scope) => {
+  const link = (scope, element, attrs, ctrl) => {
     scope.handleKeyDown = (e) => {
       if(e.which !== 13 || !scope.currentTodo.isCorrect()) {
         return;
       }
 
-      scope.onCreateTodo({ todo: scope.currentTodo });
+      ctrl.addTodo(scope.currentTodo);
 
       scope.currentTodo = scope.todoFactory.createTodo();
     }
@@ -21,10 +21,9 @@ function TodoFormDirective(todoFactory) {
   return {
     restrict: 'E',
     template: require('./todo-form.template.html'),
-    scope: {
-      onCreateTodo: '&'
-    },
+    require: '^todoComponent',
     controller,
+    scope: true,
     link
   }
 

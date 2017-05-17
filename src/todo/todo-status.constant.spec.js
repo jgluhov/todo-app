@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 describe("TODO Status", () => {
   let $injector,
     todoFactory,

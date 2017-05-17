@@ -1,37 +1,52 @@
-import todoFactory from '../todo.factory';
 import { expect } from 'chai';
+import todoFactory from '../todo.factory';
 
 describe('todoFormDirective', () => {
   let sandbox,
     $injector,
-    $element,
     $compile,
     $provide,
     $rootScope,
     parentScope,
     todoFormScope,
+    $element,
     $todoFormElement,
-    todoFormController;
+    todoFormController,
+    addTodoSpy;
 
   beforeEach(angular.mock.module('todoApp', ($provide) => {
     $provide.factory('todoFactory', todoFactory);
   }));
 
-  beforeEach(angular.mock.inject((_$injector_) => {
+  beforeEach(angular.mock.inject(_$injector_ => {
     $injector = _$injector_;
+  }))
+
+  beforeEach(angular.mock.inject((_$injector_) => {
+    $compile = $injector.get('$compile');
+    $rootScope = $injector.get('$rootScope');
   }));
 
   beforeEach(angular.mock.inject((_$compile_, _$rootScope_) => {
     sandbox = sinon.sandbox.create();
 
-    $compile = _$compile_;
-    $rootScope = _$rootScope_;
     parentScope = $rootScope.$new();
 
-    $todoFormElement = $compile('<todo-form></todo-form>')(parentScope);
+    const todoCtrl = {
+      todos: [],
+      addTodo: function() {}
+    }
+
+    addTodoSpy = sandbox.spy(todoCtrl, 'addTodo');
+    $element = angular.element('<div><todo-form></todo-form><div>')
+
+    $element.data('$todoComponentController', todoCtrl);
+
+    $compile($element)(parentScope);
+    $todoFormElement = $element.find('todo-form');
     todoFormController = $todoFormElement.controller('todoForm');
 
-    todoFormScope = $todoFormElement.isolateScope();
+    todoFormScope = $todoFormElement.scope();
     parentScope.$digest();
   }));
 
@@ -56,6 +71,7 @@ describe('todoFormDirective', () => {
   });
 
   it('should be initialized currentTodo property', () => {
+
     expect(todoFormScope.currentTodo).to.exist;
     expect(todoFormScope.currentTodo).to.be.an('object');
   });
@@ -72,13 +88,12 @@ describe('todoFormDirective', () => {
   it("should not create new todo if not an ENTER key was pressed", () => {
     todoFormScope.currentTodo.text = 'some todo';
     const previousTodo = todoFormScope.currentTodo;
-    const onCreateTodoSpy = sandbox.spy(todoFormScope, 'onCreateTodo');
 
     todoFormScope.$digest();
 
     $todoFormElement.find('input').triggerHandler({ type: 'keydown', which: 14 });
 
-    expect(onCreateTodoSpy).to.not.have.been.called;
+    expect(addTodoSpy).to.not.have.been.called;
     expect(todoFormScope.currentTodo).to.be.equal(previousTodo);
   });
 
@@ -86,27 +101,25 @@ describe('todoFormDirective', () => {
     todoFormScope.currentTodo.text = '';
 
     const previousTodo = todoFormScope.currentTodo;
-    const onCreateTodoSpy = sandbox.spy(todoFormScope, 'onCreateTodo');
 
     todoFormScope.$digest();
     $todoFormElement.find('input').triggerHandler({ type: 'keydown', which: 13 });
 
-    expect(onCreateTodoSpy).to.not.have.been.called;
+    expect(addTodoSpy).to.not.have.been.called;
   });
 
   it('should call onCreateTodo if ENTER key was pressed and currentTodo is correct', () => {
     todoFormScope.currentTodo.text = 'some todo';
     const previousTodo = todoFormScope.currentTodo;
 
-    const onCreateTodoSpy = sandbox.spy(todoFormScope, 'onCreateTodo');
     const createTodoSpy = sandbox.spy(todoFormScope.todoFactory, 'createTodo');
 
     todoFormScope.$digest();
 
     $todoFormElement.find('input').triggerHandler({ type: 'keydown', which: 13 });
 
-    expect(onCreateTodoSpy).to.have.been.called;
-    expect(onCreateTodoSpy).to.have.been.calledWith({ todo: previousTodo })
+    expect(addTodoSpy).to.have.been.called;
+    expect(addTodoSpy).to.have.been.calledWith(previousTodo)
     expect(createTodoSpy).to.have.been.called;
     expect(todoFormScope.currentTodo).to.not.equal(previousTodo)
   });

@@ -1,10 +1,9 @@
 class TodoCtrl {
-  $onInit() {
-    this.title = 'todos';
+  constructor($route) {
     this.todos = [];
   }
 
-  handleCreateTodo(todo) {
+  addTodo(todo) {
     this.todos.push(todo);
   }
 }

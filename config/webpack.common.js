@@ -5,8 +5,8 @@ var path = require('path'),
 
 module.exports = {
   entry: {
-    vendor: "./src/vendor",
-    app: "./src/app"
+    app: "./src/app",
+    vendor: "./src/vendor"
   },
 
   output: {
@@ -14,17 +14,34 @@ module.exports = {
   },
 
   module: {
+    noParse: [
+      /[\/\\]node_modules[\/\\]angular[\/\\]angular\.js$/,
+      /[\/\\]node_modules[\/\\]angular-route[\/\\]angular\.js$/,
+      /[\/\\]node_modules[\/\\]jquery[\/\\]dist[\/\\]jquery\.js$/,
+    ],
+
     rules: [
       {
         test: /\.js$/,
-        loader: "babel-loader",
         exclude: /(node_modules|bower_components)/,
-        options: {
-          presets: [
-            'es2015',
-            'stage-0'
-          ]
-        }
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: [
+                'es2015',
+                'stage-0'
+              ]
+            }
+          },
+          {
+            loader: 'ng-annotate-loader',
+            options: {
+              add: false,
+              map: false,
+            }
+          }
+        ]
       },
       {
         test: /\.html$/,
@@ -43,17 +60,12 @@ module.exports = {
       }
     ]
   },
+
   plugins: [
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      'window.jQuery': 'jquery',
-      'window.$': 'jquery',
-    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/index.html'
     }),
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin('[name].css')    
   ]
 }

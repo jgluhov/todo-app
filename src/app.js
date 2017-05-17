@@ -1,6 +1,8 @@
-import 'semantic-ui-css/semantic.css';
+import "semantic-ui-css/semantic.min.css"
 import angular from 'angular';
 import ngRoute from 'angular-route';
+
+import HomeCtrl from './home.controller';
 
 import TodoComponent from './todo/todo.component';
 import todoFactory from './todo/todo.factory';
@@ -11,9 +13,10 @@ import todoStatusConstant from './todo/todo-status.constant';
 
 import config from './config';
 
-export default angular
+const todoApp = angular
   .module('todoApp', [ngRoute])
   .constant('todoStatusConstant', todoStatusConstant)
+  .controller('HomeCtrl', HomeCtrl)
   .component('todoComponent', TodoComponent)
   .directive('todoForm', todoFormDirective)
   .directive('todoList', todoListDirective)
@@ -21,3 +24,5 @@ export default angular
   .factory('todoFactory', todoFactory)
   .config(config)
   .name;
+
+export default todoApp;

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-describe("Todo panel", () => {
+describe("TODO PANEL", () => {
   let $injector,
     $compile,
     $rootScope,
@@ -34,7 +34,7 @@ describe("Todo panel", () => {
   });
 
   it('should have three inputs type radio', () => {
-    expect($todoPanelElement.find('input[type="radio"]').length).to.equal(3)
+    expect($todoPanelElement[0].querySelectorAll('input[name="filterBy"]').length).to.equal(3)
   })
 
   // should have todo status constant in scope

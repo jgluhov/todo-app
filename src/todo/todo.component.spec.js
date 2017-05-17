@@ -29,50 +29,43 @@ describe('TODO Component', () => {
     todoFormScope = $todoFormElement.isolateScope();
 
     todoFactory = _$injector_.get('todoFactory');
-
-    todoCtrl.$onInit();
   }))
-
-  it('title property should be initialized', () => {
-    expect(todoCtrl.title).to.be.a('string');
-    expect(todoCtrl.title).to.not.be.empty;
-  });
 
   it('should contain empty todos array after initialization', () => {
     expect(todoCtrl.todos).to.be.exist;
     expect(Array.isArray(todoCtrl.todos)).to.be.true;
     expect(todoCtrl.todos).to.be.empty;
+
   });
+  // it('should add new todo into todos if user pressed  ENTER key and todo is correct', () => {
+  //   const handleCreateTodoSpy = sinon.spy(todoCtrl, 'handleCreateTodo');
+  //   const onCreateTodoSpy = sinon.spy(todoFormScope, 'onCreateTodo');
+  //   todoCtrl.todos = [];
+  //   const previousTodo = todoFormScope.currentTodo;
+  //   previousTodo.text = 'some todo';
+  //
+  //   parentScope.$digest();
+  //
+  //   $todoFormElement.find('input').triggerHandler({ type: 'keydown', which: 13 });
+  //
+  //   expect(onCreateTodoSpy).to.have.been.calledWith({ todo: previousTodo });
+  //   expect(handleCreateTodoSpy).to.have.been.called;
+  //   expect(handleCreateTodoSpy).to.have.been.calledWith(previousTodo);
+  //   expect(todoCtrl.todos).to.include(previousTodo);
+  //   expect(todoCtrl.todos).to.have.lengthOf(1);
+  // })
 
-  it('should add new todo into todos if user pressed  ENTER key and todo is correct', () => {
-    const handleCreateTodoSpy = sinon.spy(todoCtrl, 'handleCreateTodo');
-    const onCreateTodoSpy = sinon.spy(todoFormScope, 'onCreateTodo');
-    todoCtrl.todos = [];
-    const previousTodo = todoFormScope.currentTodo;
-    previousTodo.text = 'some todo';
-
-    parentScope.$digest();
-
-    $todoFormElement.find('input').triggerHandler({ type: 'keydown', which: 13 });
-
-    expect(onCreateTodoSpy).to.have.been.calledWith({ todo: previousTodo });
-    expect(handleCreateTodoSpy).to.have.been.called;
-    expect(handleCreateTodoSpy).to.have.been.calledWith(previousTodo);
-    expect(todoCtrl.todos).to.include(previousTodo);
-    expect(todoCtrl.todos).to.have.lengthOf(1);
-  })
-
-  it('should render todo list', () => {
-    todoCtrl.todos = [
-      todoFactory.createTodo('some todo'),
-      todoFactory.createTodo('another todo'),
-      todoFactory.createTodo('next todo')
-    ];
-
-    parentScope.$digest();
-
-    expect($todoListElement.find('li').length).to.be.equal(3);
-  });
+  // it('should render todo list', () => {
+  //   todoCtrl.todos = [
+  //     todoFactory.createTodo('some todo'),
+  //     todoFactory.createTodo('another todo'),
+  //     todoFactory.createTodo('next todo')
+  //   ];
+  //
+  //   parentScope.$digest();
+  //
+  //   expect($todoListElement.find('li').length).to.be.equal(3);
+  // });
 
   it('should todo panel exist in todo component template', () => {
     expect($todoPanelElement.length).to.be.equal(1);

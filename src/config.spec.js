@@ -12,7 +12,14 @@ describe('ROUTES testing', () => {
 
   it('should redirect to home if it`s unknown location was set', () => {
     $rootScope.$apply(() => $location.path('/unknown'));
-    
+
     expect($location.path()).to.be.equal('/home');
+  })
+
+  it('should set HomeCtrl if home route is active', () => {
+    $rootScope.$apply(() => $location.path('/home'));
+
+    expect($route.routes['/home'].controller).to.be.equal('HomeCtrl');
+    expect($route.routes['/home'].controllerAs).to.be.equal('vm');
   })
 })
