@@ -10,6 +10,7 @@ import todoFormDirective from './todo/todo-form/todo-form.directive';
 import todoListDirective from './todo/todo-list/todo-list.directive';
 import todoPanelDirective from './todo/todo-panel/todo-panel.directive';
 import todoStatusConstant from './todo/todo-status.constant';
+import someFilter from './some.filter';
 
 import config from './config';
 
@@ -22,6 +23,7 @@ const todoApp = angular
   .directive('todoList', todoListDirective)
   .directive('todoPanel', todoPanelDirective)
   .factory('todoFactory', todoFactory)
+  .filter('someFilter', someFilter)
   .config(config)
   .name;
 

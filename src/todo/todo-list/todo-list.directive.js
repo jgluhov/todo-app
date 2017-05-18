@@ -1,11 +1,11 @@
 function todoListDirective() {
 
-  const controller = ($scope) => {
-
+  const controller = function($scope, $element, $attrs) {
+    // TODO needed to use factory
   }
 
   const link = (scope, element, attrs, ctrl) => {
-    console.log('ctrl', ctrl)
+    
   }
 
   return {
